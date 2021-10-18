@@ -8,8 +8,4 @@ orbs:
 workflows:
   build:
     jobs:
-      - cypress/run:
-      name: Chrome
-      executor: with-chrome
-      command: npm run chrome
-      store_artifacts: true
+      - cypress/run
