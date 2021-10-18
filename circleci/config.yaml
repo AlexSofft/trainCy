@@ -1,0 +1,15 @@
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
+  executors:
+   with-chrome:
+   docker: 
+   - image: "cypress/browsers:node14.7.0-chrome84"
+workflows:
+  build:
+    jobs:
+      - cypress/run:
+      name: Chrome
+      executor: with-chrome
+      command: npm run chrome
+      store_artifacts: true

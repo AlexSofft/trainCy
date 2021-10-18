@@ -4,7 +4,12 @@
   "description": "edu",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "serve": "json-server db.json",
+    "dev": "concurrently \"npm run watch\" \"npm run serve\"",
+    "cypress": "cypress open",
+    "cypress:all": "cypress run"
   },
   "repository": {
     "type": "git",
@@ -13,9 +18,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  
   "bugs": {
     "url": "https://github.com/AlexSofft/trainCy/issues"
   },
+
+  
   "homepage": "https://github.com/AlexSofft/trainCy#readme",
   "devDependencies": {
     "cypress": "^8.6.0"
