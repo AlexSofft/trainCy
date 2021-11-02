@@ -4,12 +4,16 @@
   "description": "edu",
   "main": "index.js",
   "scripts": {
+    "test": "npx cypress open", 
     "build": "webpack",
     "watch": "webpack --watch",
     "serve": "json-server db.json",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
     "cypress": "cypress open",
-    "cypress:all": "cypress run"
+    "cypress:all": "cypress run",
+    "mochawesome:merge": "npx marge mochawesome.json \"cypress/results/mochawesome/*.json\" > mochawesome.json && npx merge mochawesome.json",
+    "chrome": "npx cypress run --browser chrome --headed && npm run mochawesome:merge", 
+    "report": "cypress run --reporter mochawesome \" --reporter-options reportDir='cypress/results',overwrite=false,html=false,json=true"
   },
   "repository": {
     "type": "git",
@@ -18,14 +22,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  
   "bugs": {
     "url": "https://github.com/AlexSofft/trainCy/issues"
   },
-
-  
   "homepage": "https://github.com/AlexSofft/trainCy#readme",
   "devDependencies": {
-    "cypress": "^8.6.0"
+    "@percy/cypress": "2.3.4",
+    "cypress": "^8.6.0",
+    "mochawesome": "^6.3.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.2.0"
   }
 }

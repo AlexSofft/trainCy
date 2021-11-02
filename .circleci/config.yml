@@ -9,6 +9,13 @@ workflows:
   build:
     jobs:
       - cypress/run:
+          name: Chrome
+          spec: cypress/integration/ui/*
           executor: with-chrome
           browser: chrome
+          command: npm run chrome
+          store_artifacts: true
+          post-steps:
+            - store_artifacts:
+                path: mochawesome-report
 
