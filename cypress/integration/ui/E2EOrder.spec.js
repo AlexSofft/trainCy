@@ -66,7 +66,7 @@ describe("Automate End to End Buy Order functionality", function () {
         })
     });
 
-    it.only("Verify that 'Add to Wishlist' only works after login", function () {
+    it("Verify that 'Add to Wishlist' only works after login", function () {
         accountPage.signOut().click();
         loginPage.getPageTitle().should('have.text', 'Authentication');
         loginPage.getWomenButton().click();
