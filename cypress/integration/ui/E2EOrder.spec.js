@@ -66,15 +66,14 @@ describe("Automate End to End Buy Order functionality", function () {
         })
     });
 
-    it("Verify that 'Add to Wishlist' only works after login", function () {
+    it.only("Verify that 'Add to Wishlist' only works after login", function () {
         accountPage.signOut().click();
         loginPage.getPageTitle().should('have.text', 'Authentication');
         loginPage.getWomenButton().click();
         womenPage.getItemsList().first().click();
-        womenPage.addToCart();
-        orderPage.proceedToCheckoutPopUpButton().click();
-        orderPage.getSummaryProceedToCheckoutButton().click();
-        loginPage.getPageTitle().should('have.text', 'Authentication');
+        womenPage.getAddToWishListButton().click();
+        womenPage.getAddToWishListError().should('have.text', 'You must be logged in to manage your wishlist.')
+     
     });
 });
 

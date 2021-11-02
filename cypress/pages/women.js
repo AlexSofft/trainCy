@@ -23,9 +23,19 @@ export default class WomenPage extends BasePage {
 
     }
 
+    getAddToWishListButton() {
+        return cy.get('#wishlist_button')
+    }
+
+    getAddToWishListError(){
+        return cy.get('.fancybox-error');
+    }
+
     addToCart() {
         cy.intercept('POST', "/index.php?rand=*").as('addToCart')
         this.getAddToCartButton().click()
         cy.wait('@addToCart')
     }
+
+
 }
