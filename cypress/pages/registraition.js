@@ -6,6 +6,8 @@ export default class RegistrationPage extends BasePage {
         super()
     }
 
+    getMenGenderRadio() { return cy.get('#id_gender1') }
+    getMrsGenderRadio() { return cy.get('#id_gender2') }
     getFirstName() { return cy.get('#customer_firstname') }
     getLastName() { return cy.get('#customer_lastname') }
     getPassword() { return cy.get('#passwd') }
@@ -19,25 +21,30 @@ export default class RegistrationPage extends BasePage {
     getPostCode() { return cy.get('[name="postcode"]') }
     getCountry() { return cy.get('select#id_country option:selected') }
     getMobile() { return cy.get('[name="phone_mobile"]') }
-    submitForm() { return cy.get('#submitAccount') }
+    getSubmitFormButton() { return cy.get('#submitAccount') }
 
-    signUp(firstName, lastName, password, company, address, city, postalCode, mobile) {
-        cy.get('#id_gender1').click()
-        this.getFirstName().type(firstName)
-        this.getLastName().type(lastName)
-        this.getPassword().type(password)
-        this.getDate().select('10')
-        this.getMonth().select('10')
-        this.getYear().select('1983')
+    //SIGNUP
+    clickRadio(sex) { sex === 'Mrs' ? this.getMrsGenderRadio().click() : this.getMenGenderRadio().click() }
+    enterFirstName(firstName) { this.getFirstName().type(firstName) }
+    enterLastname(lastname) { this.getLastName().type(lastname) }
+    enterPassword(password) { this.getPassword().type(password) }
+    selectDate(date) { this.getDate().select(date) }
+    selectMonth(month) { this.getMonth().select(month) }
+    selectYear(year) { this.getYear().select(year) }
+    enterCompany(company) { this.getCompany().type(company) }
+    enterAddress(address) { this.getAddress().type(address) }
+    enterCity(city) { this.getCity().type(city) }
+    selectState(state) { this.getState().select(state) }
+    enterPostalCode(postalCode) { this.getPostCode().type(postalCode) }
+    enterMobile(mobile) { this.getMobile().type(mobile) }
+    submitForm() { this.getSubmitFormButton().click() }
 
-        this.getCompany().type(company)
-        this.getAddress().type(address)
-        this.getCity().type(city)
+    // CHECK FIELDS DEFAULT
+    checkCountry(country) { this.getCountry().should('have.text', country) }
 
-        this.getState().select('Colorado')
-        this.getPostCode().type(postalCode)
-        this.getMobile().type(mobile)
-        this.submitForm().click()
-
-    }
+    //CHECK SBMT_FORM ERRORS
+    checkFirstNameError() { this.getFirstName().focus().blur().parent('div').should('have.class', 'required form-group form-error') }
+    checkLastNameError() { this.getLastName().focus().blur().parent('div').should('have.class', 'required form-group form-error') }
+    checkPasswordError() { this.getPassword().focus().blur().parent('div').should('have.class', 'required password form-group form-error') }
+    checkSbmtErrorMesgs(message) { this.getErrorMessage().find('p').should('have.text', message); }
 }

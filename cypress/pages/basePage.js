@@ -11,4 +11,7 @@ export default class BasePage {
     getSearchField() { return cy.get('#search_query_top') }
     getSubmitSearch() { return cy.get('[name="submit_search"]') }
 
+    clickWomenButton() { this.getWomenButton().click() }
+
+    checkUrl(url) { cy.location("pathname").should("eq", url); }
 }

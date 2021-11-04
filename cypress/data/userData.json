@@ -9,6 +9,7 @@
     "company": "Itech",
     "address": "Sothpark School",
     "city": "Southpark",
+    "state": "Colorado",
     "postalCode": "21002",
     "invalidPostalCode": "123456",
     "mobile": "+55555555555"

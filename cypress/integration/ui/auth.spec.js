@@ -1,25 +1,20 @@
-import LoginPage from '../../pages/auth';
-import AccountPage from '../../pages/account';
-import user from '../../data/userData.json';
+import authSteps from '../../steps/auth.step'
 
-const loginPage = new LoginPage();
-const accountPage = new AccountPage();
-
-describe("Login process", function () {
-  beforeEach(function () {
-    loginPage.signIn();
+describe("Login process", () => {
+  beforeEach( () => {
+    authSteps.signIn();
   });
 
-  it("should login", function () {
-    loginPage.logIn(user.email, user.password);
-    accountPage.getPageTitle().should('have.text', 'My account');
-    accountPage.getUserName().should('have.text', `${user.firstName} ${user.lastName}`);
-    accountPage.signOut();
+  it("should login", () => {
+    authSteps.logIn();
   });
 
-  it("should fail to login", function () {
-    loginPage.logIn(user.email, user.invalidPassword);
-    loginPage.getErrorMessage().find('p').should('have.text', 'There is 1 error');
+  it("should fail to login", () => {
+    authSteps.failToLogin()
+  });
+
+  it("should show invalid email error", function () {
+    authSteps.failToCreateBankAccount();
   });
 
 });

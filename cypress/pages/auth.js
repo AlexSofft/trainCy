@@ -8,24 +8,24 @@ export default class LoginPage extends BasePage {
 
     getCreateAccountErrorMessage() { return cy.get('#create_account_error li') }
     getPageTitle() { return cy.get('.page-heading') }
+    getCreateAccountField() { return cy.get('#email_create') }
+    getCreateAccountButton() { return cy.get('#SubmitCreate') }
+    getSignInButton() { return cy.get('.login') }
+    getEmailField() { return cy.get('#email') }
+    getPasswordFiled() { return cy.get('#passwd') }
+    getSbmtLoginButton() { return cy.get('#SubmitLogin') }
 
-    createBankAccount(email) {
-        cy.intercept('POST', "/index.php").as('createAccount');
-        cy.get('#email_create').type(email);
-        cy.get('#SubmitCreate').click();
-        cy.wait('@createAccount');
-    }
+    clickSignIn() { this.getSignInButton().click() }
 
-    signIn() {
-        cy.intercept('GET', "https://www.facebook.com/x/oauth/status?ancestor_origins=*").as('signin');
-        this.navigate("/signin");
-        cy.get('.login').click();
-        cy.wait('@signin');
-    }
+    enterNewAccountEmail(email) { this.getCreateAccountField().type(email) }
+    clickCreateAccountButton() { this.getCreateAccountButton().click() }
 
-    logIn(email, password) {
-        cy.get('#email').type(email)
-        cy.get('#passwd').type(password)
-        cy.get('#SubmitLogin').click()
+    enterEmailForLogin(email) { this.getEmailField().type(email) }
+    enterPassword(password) { this.getPasswordFiled().type(password) }
+    clickSbmtButton() { this.getSbmtLoginButton().click() }
+
+    checkLoginErrorMessage(text) { this.getErrorMessage().find('p').should('have.text', text) }
+    checkCreateAccountErrorMessage(message) {
+        this.getCreateAccountErrorMessage().should('have.text', message);
     }
 }
