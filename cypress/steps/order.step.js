@@ -7,34 +7,44 @@ class OrderSteps {
         this.orderpage = new OrderPage();
         this.accountpage = new AccountPage();
         this.itempage = new ItemPage();
-
     }
 
-    purchaseItem() {
-        let fullPrice;
-        this.accountpage.clickWomenButton()
-        this.itempage.clickFirstItem()
-        this.itempage.selectSize('M')
-        this.itempage.selectColor('Blue')
-
-        cy.intercept('POST', '/index.php?rand=*').as('addToCart')
-        this.itempage.clickAddToCart()
-        cy.wait('@addToCart')
-
-        this.orderpage.clickProceedToCheckoutPopUpButton()
+    checkTotalPrice() {
         this.orderpage.getSummaryFullPrice().then(($sum) => {
-            fullPrice = $sum.text()
-            console.log(`FULL PRICE ${fullPrice}`) 
+            let fullPrice = $sum.text()
+            cy.wrap(fullPrice).as('fullPrice')
         })
-        console.log(`FULL PRICE2 ${fullPrice}`)
         this.orderpage.clickSummaryProceedToCheckoutButton()
-
         this.orderpage.clickAddressProceedToCheckoutButton()
         this.orderpage.clickTermsAgreeCheckbox()
         this.orderpage.clickShippingProceedToCheckoutButton()
         this.orderpage.clickPayByCheckButton()
         this.orderpage.clickConfirmOrderButton()
-        this.orderpage.checkTotalAmount(fullPrice)
+        this.orderpage.checkTotalAmount("@fullPrice")
+    }
+
+    checkPriceReflectsQntChange() {
+        this.orderpage.getSummaryUnitPrice().then(($sum) => {
+            let unitPrice = $sum.text().trim().slice(1)
+            let doublePrice = (parseFloat(unitPrice)*2.0).toString();
+            cy.wrap(doublePrice).as('doublePrice')
+            console.log(`UNIT PRICE ${doublePrice}`)
+        })
+        cy.intercept('POST', 'http://automationpractice.com/index.php?rand=*').as('wait')
+        this.orderpage.clickAddQtyButton()
+        cy.wait('@wait')
+        this.orderpage.checkDoublePrice('@doublePrice')
+    }
+
+    addItemToCart() {
+        this.accountpage.clickWomenButton()
+        this.itempage.clickFirstItem()
+        this.itempage.selectSize('M')
+        this.itempage.selectColor('Blue')
+        cy.intercept('POST', '/index.php?rand=*').as('addToCart')
+        this.itempage.clickAddToCart()
+        cy.wait('@addToCart')
+        this.orderpage.clickProceedToCheckoutPopUpButton()
     }
 
 }

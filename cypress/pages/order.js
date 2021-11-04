@@ -8,7 +8,7 @@ export default class OrderPage extends BasePage {
 
     getProceedToCheckoutPopUpButton() { return cy.get('.clearfix [title="Proceed to checkout"]') }
     getSummaryProceedToCheckoutButton() { return cy.get('p a[title="Proceed to checkout"]') }
-    getSummaryUnitPrice() { return cy.get('.cart_unit .price') }
+    getSummaryUnitPrice() { return cy.get('.cart_unit .price > span') }
     getSummaryTotalPrice() { return cy.get('.cart_total .price') }
     getSummaryFullPrice() { return cy.get('#total_price') }
     getAddQtyButton() { return cy.get('[title="Add"]') }
@@ -22,12 +22,14 @@ export default class OrderPage extends BasePage {
 
 
     clickProceedToCheckoutPopUpButton() { this.getProceedToCheckoutPopUpButton().click() }
-    // summaryFullPrice() { return this.getSummaryFullPrice().then(($sum) => {$sum.text() }) }
     clickSummaryProceedToCheckoutButton() { this.getSummaryProceedToCheckoutButton().click() }
     clickAddressProceedToCheckoutButton() { this.getAddressProceedToCheckoutButton().click() }
     clickTermsAgreeCheckbox() { this.getTermsAgreeCheckbox().click() }
     clickShippingProceedToCheckoutButton() { this.getShippingProceedToCheckoutButton().click() }
     clickPayByCheckButton() { this.getPayByCheckButton().click() }
     clickConfirmOrderButton() { this.getConfirmOrderButton().click() }
-    checkTotalAmount(fullPrice) { this.getTotalAmount().should($amount => expect($amount.text()).to.equal(fullPrice)) }
+    checkTotalAmount(fullPrice) { cy.get(fullPrice).then($item => this.getTotalAmount().should('contain', $item)) }
+    checkDoublePrice(price){ cy.get(price).then($item => this.getSummaryTotalPrice().should('contain', $item)) }
+    clickAddQtyButton() { this.getAddQtyButton().click() }
+
 }
