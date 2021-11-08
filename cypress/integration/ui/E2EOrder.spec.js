@@ -9,6 +9,7 @@ describe("Automate End to End Buy Order functionality", () => {
 
     it("should purchase first item", () => {
         orderSteps.addItemToCart()
+        orderSteps.proceedWithPurchase()
         orderSteps.checkTotalPrice()
     });
 
@@ -17,23 +18,20 @@ describe("Automate End to End Buy Order functionality", () => {
         orderSteps.checkPriceReflectsQntChange()
     });
 
-    // it("Automate 'Search Product' Functionality", function () {
+    it("Automate 'Search Product' Functionality", function () {
+        orderSteps.enterDressSearchField()
+        orderSteps.sbmtSearch()
+        orderSteps.checkSearchedItemTitle()
+    });
 
-    //     accountPage.getSearchField().type('Dress');
-    //     accountPage.getSubmitSearch().click();
+    it("Verify that 'Add to Wishlist' only works after login", function () {
+        orderSteps.signOut()
+        orderSteps.addItemToWishLis()
+    });
+
+});
+
     //     orderPage.getSearchResultTitle().first().should(($span) => {
     //         expect($span.text().trim().replaceAll('"', '')).to.equal('Dress');
     //     })
-    // });
-
-    // it("Verify that 'Add to Wishlist' only works after login", function () {
-    //     accountPage.signOut().click();
-    //     loginPage.getPageTitle().should('have.text', 'Authentication');
-    //     loginPage.getWomenButton().click();
-    //     womenPage.getItemsList().first().click();
-    //     womenPage.getAddToWishListButton().click();
-    //     womenPage.getAddToWishListError().should('have.text', 'You must be logged in to manage your wishlist.')
-
-    // });
-});
 

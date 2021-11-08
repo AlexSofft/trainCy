@@ -28,8 +28,12 @@ export default class OrderPage extends BasePage {
     clickShippingProceedToCheckoutButton() { this.getShippingProceedToCheckoutButton().click() }
     clickPayByCheckButton() { this.getPayByCheckButton().click() }
     clickConfirmOrderButton() { this.getConfirmOrderButton().click() }
-    checkTotalAmount(fullPrice) { cy.get(fullPrice).then($item => this.getTotalAmount().should('contain', $item)) }
-    checkDoublePrice(price){ cy.get(price).then($item => this.getSummaryTotalPrice().should('contain', $item)) }
     clickAddQtyButton() { this.getAddQtyButton().click() }
 
+    checkTotalAmount(fullPrice) { this.getTotalAmount().should('contain', fullPrice) }
+    checkDoublePrice(price) { cy.get(price).then($item => this.getSummaryTotalPrice().should('contain', $item)) }
+    checkItemitle(item) { this.getSearchResultTitle().first().should('contain', item)}
+
 }
+
+    // checkTotalAmount(fullPrice) { cy.get(fullPrice).then($item => this.getTotalAmount().should('contain', $item)) }
