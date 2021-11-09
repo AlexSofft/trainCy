@@ -12,8 +12,6 @@ export default class BasePage {
     getSubmitSearch() { return cy.get('[name="submit_search"]') }
     getSignOutButton() { return cy.get('[title="Log me out"]') }
 
-
-
     checkUrl(url) { cy.location("pathname").should("eq", url); }
 
     clickWomenButton() { this.getWomenButton().click() }

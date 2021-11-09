@@ -18,13 +18,13 @@ describe("Automate End to End Buy Order functionality", () => {
         orderSteps.checkPriceReflectsQntChange()
     });
 
-    it("Automate 'Search Product' Functionality", function () {
+    it("Automate 'Search Product' Functionality", () => {
         orderSteps.enterDressSearchField()
         orderSteps.sbmtSearch()
         orderSteps.checkSearchedItemTitle()
     });
 
-    it("Verify that 'Add to Wishlist' only works after login", function () {
+    it("Verify that 'Add to Wishlist' only works after login", () => {
         orderSteps.signOut()
         orderSteps.addItemToWishLis()
     });
